@@ -4,7 +4,7 @@ import os
 app = Flask(__name__)
 
 # アップロードされた画像の保存先ディレクトリ
-UPLOAD_FOLDER = '/Users/k22112kk/Documents/GitHub/11/uploads'
+UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # アップロードされる拡張子の制限

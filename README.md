@@ -24,19 +24,35 @@
 
 ## ディレクトリの構造
 [11]
+<br>
   ├[moduel]（画像処理）
+<br>
   │  └cannycontor.py
+<br>
   │  └face_cascade.py
+<br>
   │  └grayscale.py
+<br>
   │  └mozaiku_k22064.py
+<br>
   ├[output_image]（処理後の画像）
+<br>
   │  └canny.jpg
+<br>
   │  └Detected_Faces.jpg（枠表示）
+<br>
   │  └grayscale.jpg（二値化）
+<br>
   │  └mozaiku.jpg（モザイク）
+<br>
   ├[templates]
+<br>
   │  └index.html
+<br>
   ├[uploads]（アップロードした画像）
+<br>
   │  └hiroy.jpg
+<br>
   │  └images01.jpg
+<br>
   └main.py ⇠ プロジェクトのエントリポイント

@@ -13,3 +13,22 @@
 ## システムの動作確認方法
 
 ## 使用したライブラリのバージョン
+
+## ディレクトリの構造
+[11]
+  ├[moduel]（画像処理）
+  │  └cannycontor.py
+  │  └face_cascade.py
+  │  └grayscale.py
+  │  └mozaiku_k22064.py
+  ├[output_image]（処理後の画像）
+  │  └canny.jpg
+  │  └Detected_Faces.jpg（枠表示）
+  │  └grayscale.jpg（二値化）
+  │  └mozaiku.jpg（モザイク）
+  ├[templates]
+  │  └index.html
+  ├[uploads]（アップロードした画像）
+  │  └hiroy.jpg
+  │  └images01.jpg
+  └main.py ⇠ プロジェクトのエントリポイント

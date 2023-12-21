@@ -1,6 +1,6 @@
 import cv2
 
-def grayscale_and_threshold(input_image_path, output_path):
+def grayscale_and_threshold(input_image_path, output_path="output_image/grayscale.jpg"):
     # 画像を読み込む
     image = cv2.imread(input_image_path)
 
@@ -15,16 +15,14 @@ def grayscale_and_threshold(input_image_path, output_path):
     # ここで適切な閾値を設定し、二値化を行う
     _, threshold_image = cv2.threshold(gray_image, 128, 255, cv2.THRESH_BINARY)
 
+    # 画像の保存
+    cv2.imwrite(output_path, threshold_image)
+
     # 画像の確認（二値化）
     cv2.imshow('Threshold Image', threshold_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    # 画像の保存
-    cv2.imwrite(output_path, threshold_image)
-
-if __name__ == "__main__":
-    input_image_path = 'image/images.jpeg'
-    output_image_path = 'image/threshold_output.jpg'
-
-    grayscale_and_threshold(input_image_path, output_image_path)
+# 画像のパスを指定して関数を呼び出す
+input_image_path = 'uploads/images01.jpg'
+grayscale_and_threshold(input_image_path)

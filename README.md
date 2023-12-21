@@ -13,3 +13,11 @@
 ## システムの動作確認方法
 
 ## 使用したライブラリのバージョン
+tensorflow-macos 2.15.0
+<br>
+torch: 2.1.1
+<br>
+torchvision: 0.16.1
+<br>
+torchaudio: 2.1.1
+<br>

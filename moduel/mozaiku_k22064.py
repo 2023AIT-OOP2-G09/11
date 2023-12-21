@@ -3,7 +3,7 @@ import urllib
 import numpy as np
 
 # ウェブでアップロードされた画像を受け取る
-image_url = "hiroy.jpg"
+image_url = "/Users/k22065kk/Documents/GitHub/11/input_image/hiroy.jpg"
 image = cv2.imread(image_url)
 
 

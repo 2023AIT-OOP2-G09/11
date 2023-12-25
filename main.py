@@ -3,6 +3,10 @@ import os
 import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from moduel.cannycontour import apply_canny_edge_detection
+from moduel.face_cascade import detect_and_draw_faces
+from moduel.grayscale import grayscale_and_threshold
+from moduel.mozaiku_k22064 import apply_mosaic_to_faces
 app = Flask(__name__)
 
 # アップロードされた画像の保存先ディレクトリ
@@ -66,6 +70,10 @@ class MyHandler(FileSystemEventHandler):
             # ディレクトリが変更された場合の処理
             print(f'Directory modified: {event.src_path}')
             # ここに実行したいプログラムのコードを追加
+            apply_canny_edge_detection()
+            detect_and_draw_faces()
+            grayscale_and_threshold()
+            apply_mosaic_to_faces()
 
 if __name__ == "__main__":
     app.run(debug=True)

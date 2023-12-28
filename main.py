@@ -74,7 +74,14 @@ class MyHandler(FileSystemEventHandler):
             detect_and_draw_faces(UPLOAD_FOLDER)
             grayscale_and_threshold(UPLOAD_FOLDER)
             apply_mosaic_to_faces(UPLOAD_FOLDER)
-
+            Canny_FOLDER = 
+            app.config['Canny_FOLDER'] = Canny_FOLDER
+            Drawface_FOLDER = 
+            app.config['drawface_FOLDER'] = Drawface_FOLDER
+            Grayscale_FOLDER = 
+            app.config['grayscale_FOLDER'] = Grayscale_FOLDER
+            Mosaic_FOLDER = 
+            app.config['Canny_FOLDER'] = Mosaic_FOLDER
 if __name__ == "__main__":
     app.run(debug=True)
     

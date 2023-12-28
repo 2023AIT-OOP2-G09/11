@@ -6,7 +6,8 @@ from watchdog.events import FileSystemEventHandler
 from moduel.cannycontour import apply_canny_edge_detection
 from moduel.face_cascade import detect_and_draw_faces
 from moduel.grayscale import grayscale_and_threshold
-from moduel.mozaiku import apply_mosaic_to_faces
+from moduel.mozaiku_k22064 import apply_mosaic_to_faces
+from pathlib import Path
 import cv2
 
 app = Flask(__name__)
@@ -96,6 +97,7 @@ def app_pic(filename):
     # uploads ディレクトリから画像を返す
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+
 # 処理済み画像の保存先ディレクトリ
 PROCESSED_FOLDER_GRAY = 'grayscale_image'
 app.config['PROCESSED_FOLDER_GRAY'] = PROCESSED_FOLDER_GRAY 
@@ -122,6 +124,37 @@ def mozaiku():
     mozaiku_dir = os.path.join(current_dir, PROCESSED_FOLDER_MOZAIKU)
     filenames = [filename for filename in os.listdir(os.path.join(current_dir, 'mozaiku_image')) if allowed_file(filename)]
     return render_template('mozaiku_form.html', filenames=filenames)
+
+class MyHandler(FileSystemEventHandler):
+    def __init__(self, upload_folder):
+        # アップロードされた画像の保存先ディレクトリ
+        self.upload_folder = Path(upload_folder)
+
+        # それぞれの処理結果を保存するディレクトリ
+        self.canny_folder = self.upload_folder / "canny"
+        self.drawface_folder = self.upload_folder / "drawface"
+        self.grayscale_folder = self.upload_folder / "grayscale"
+        self.mosaic_folder = self.upload_folder / "mosaic"
+
+        # フォルダが存在しない場合は作成する
+        self.canny_folder.mkdir(exist_ok=True)
+        self.drawface_folder.mkdir(exist_ok=True)
+        self.grayscale_folder.mkdir(exist_ok=True)
+        self.mosaic_folder.mkdir(exist_ok=True)
+    def on_modified(self, event):
+        if event.is_directory:
+            # ディレクトリが変更された場合の処理
+            print(f'Directory modified: {event.src_path}')
+            # ここに実行したいプログラムのコードを追加
+            apply_canny_edge_detection(UPLOAD_FOLDER, self.canny_folder)
+            detect_and_draw_faces(UPLOAD_FOLDER, self.drawface_folder)
+            grayscale_and_threshold(UPLOAD_FOLDER, self.grayscale_folder)
+            apply_mosaic_to_faces(UPLOAD_FOLDER, self.mosaic_folder)
+
+            app.config['Canny_FOLDER'] = str(self.canny_folder)
+            app.config['drawface_FOLDER'] = str(self.drawface_folder)
+            app.config['grayscale_FOLDER'] = str(self.grayscale_folder)
+            app.config['mosaic_FOLDER'] = str(self.mosaic_folder)
 
 @app.route('/mozaikupic/<filename>')
 def mozaiku_pic(filename):

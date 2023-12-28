@@ -70,10 +70,10 @@ class MyHandler(FileSystemEventHandler):
             # ディレクトリが変更された場合の処理
             print(f'Directory modified: {event.src_path}')
             # ここに実行したいプログラムのコードを追加
-            apply_canny_edge_detection()
-            detect_and_draw_faces()
-            grayscale_and_threshold()
-            apply_mosaic_to_faces()
+            apply_canny_edge_detection(UPLOAD_FOLDER)
+            detect_and_draw_faces(UPLOAD_FOLDER)
+            grayscale_and_threshold(UPLOAD_FOLDER)
+            apply_mosaic_to_faces(UPLOAD_FOLDER)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -6,7 +6,7 @@ from watchdog.events import FileSystemEventHandler
 from moduel.cannycontour import apply_canny_edge_detection
 from moduel.face_cascade import detect_and_draw_faces
 from moduel.grayscale import grayscale_and_threshold
-from moduel.mozaiku_k22064 import apply_mosaic_to_faces
+from moduel.mozaiku import apply_mosaic_to_faces
 from pathlib import Path
 import cv2
 

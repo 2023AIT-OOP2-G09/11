@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アップロードファイル</title>
+    <style>
+        .image-container {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 200px; /* Adjust the width as needed */
+            height: auto;
+        }
+
+        /* 画像処理(アップロード) を左寄せに */
+        .left-align {
+            float: left;
+        }
+
+        /* アップロードとアップロードリストを右寄せに */
+        .right-align {
+            float: right;
+            margin-left: 20px;
+            color: black;
+            text-decoration: none;
+        }
+
+        /* clear: both を使用して左右両方に対してfloatをクリアする */
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        nav {
+            background-color: antiquewhite;
+        }
+
+        /* リンクの色や装飾の変更 */
+        nav a {
+            color: black;
+            text-decoration: none;
+        }
+
+        nav li {
+            list-style-type: none; /* 箇条書きのマーカーを非表示にする */
+        }
+
+        nav a:hover {
+            color: blue; /* ホバー時の色を設定 */
+        }
+    </style>
+    <script>
+        function downloadImage(filename) {
+            // 画像をダウンロード
+            var link = document.createElement('a');
+            link.href = "{{ url_for('app_pic', filename='') }}" + '/' + filename;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <ul class="clearfix">
+            <span class="left-align">画像処理(アップロード)</span>
+            <li class="right-align"><a href="{{ url_for('index') }}">アップロード</a></li>
+            <li class="right-align"><a href="{{ url_for('applist') }}">アップロードリスト</a></li>
+            <li class="right-align"><a href="{{ url_for('gray') }}">グレースケール</a></li>
+            <li class="right-align"><a href="{{ url_for('mozaiku') }}">モザイク</a></li>
+            <li class="right-align"><a href="{{ url_for('cascade') }}">キャスケード</a></li>
+            <li class="right-align"><a href="{{ url_for('canny') }}">輪郭</a></li>
+        </ul>
+    </nav>
+    <h1>アップロードファイル</h1>
+    {% for filename in filenames %}
+        <div class="image-container">
+            <img src="{{ url_for('app_pic', filename=filename) }}" alt="{{ filename }}" onclick="downloadImage('{{ filename }}')">
+            <p onclick="downloadImage('{{ filename }}')">{{ filename }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
+
+

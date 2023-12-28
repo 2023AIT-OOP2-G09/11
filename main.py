@@ -7,6 +7,7 @@ from moduel.cannycontour import apply_canny_edge_detection
 from moduel.face_cascade import detect_and_draw_faces
 from moduel.grayscale import grayscale_and_threshold
 from moduel.mozaiku_k22064 import apply_mosaic_to_faces
+from pathlib import Path
 app = Flask(__name__)
 
 # アップロードされた画像の保存先ディレクトリ
@@ -65,23 +66,36 @@ def upload_file():
 
 
 class MyHandler(FileSystemEventHandler):
+    def __init__(self, upload_folder):
+        # アップロードされた画像の保存先ディレクトリ
+        self.upload_folder = Path(upload_folder)
+
+        # それぞれの処理結果を保存するディレクトリ
+        self.canny_folder = self.upload_folder / "canny"
+        self.drawface_folder = self.upload_folder / "drawface"
+        self.grayscale_folder = self.upload_folder / "grayscale"
+        self.mosaic_folder = self.upload_folder / "mosaic"
+
+        # フォルダが存在しない場合は作成する
+        self.canny_folder.mkdir(exist_ok=True)
+        self.drawface_folder.mkdir(exist_ok=True)
+        self.grayscale_folder.mkdir(exist_ok=True)
+        self.mosaic_folder.mkdir(exist_ok=True)
     def on_modified(self, event):
         if event.is_directory:
             # ディレクトリが変更された場合の処理
             print(f'Directory modified: {event.src_path}')
             # ここに実行したいプログラムのコードを追加
-            apply_canny_edge_detection(UPLOAD_FOLDER)
-            detect_and_draw_faces(UPLOAD_FOLDER)
-            grayscale_and_threshold(UPLOAD_FOLDER)
-            apply_mosaic_to_faces(UPLOAD_FOLDER)
-            Canny_FOLDER = 
-            app.config['Canny_FOLDER'] = Canny_FOLDER
-            Drawface_FOLDER = 
-            app.config['drawface_FOLDER'] = Drawface_FOLDER
-            Grayscale_FOLDER = 
-            app.config['grayscale_FOLDER'] = Grayscale_FOLDER
-            Mosaic_FOLDER = 
-            app.config['Canny_FOLDER'] = Mosaic_FOLDER
+            apply_canny_edge_detection(UPLOAD_FOLDER, self.canny_folder)
+            detect_and_draw_faces(UPLOAD_FOLDER, self.drawface_folder)
+            grayscale_and_threshold(UPLOAD_FOLDER, self.grayscale_folder)
+            apply_mosaic_to_faces(UPLOAD_FOLDER, self.mosaic_folder)
+
+            app.config['Canny_FOLDER'] = str(self.canny_folder)
+            app.config['drawface_FOLDER'] = str(self.drawface_folder)
+            app.config['grayscale_FOLDER'] = str(self.grayscale_folder)
+            app.config['mosaic_FOLDER'] = str(self.mosaic_folder)
+
 if __name__ == "__main__":
     app.run(debug=True)
     

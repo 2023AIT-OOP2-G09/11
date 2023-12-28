@@ -17,7 +17,7 @@ def process_images(input_folder, output_folder):
 UPLOAD_FOLDER = 'uploads'
 
 # 処理済み画像の保存先ディレクトリ
-PROCESSED_FOLDER = 'cannycontour_image'
+PROCESSED_FOLDER = 'canny_image'
 
 def apply_canny_edge_detection(input_image_path, output_path, low_threshold=100, high_threshold=200):
     # 画像を読み込む

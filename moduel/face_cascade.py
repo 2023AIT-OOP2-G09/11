@@ -17,7 +17,7 @@ def process_images(input_folder, output_folder):
 UPLOAD_FOLDER = 'uploads'
 
 # 処理済み画像の保存先ディレクトリ
-PROCESSED_FOLDER = 'face_cascade_image'
+PROCESSED_FOLDER = 'cascade_image'
 
 def detect_and_draw_faces(input_image_path, output_path):
     # 画像を読み込む

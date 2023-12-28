@@ -80,7 +80,8 @@ def upload_file():
         file.save(filename)
 
         # 成功時の処理
-        return 'ファイルが正常にアップロードされました。'
+        message = f'{file.filename} が正常にアップロードされました。'
+        return render_template('index.html', message=message)
 
     # 許可されていない拡張子の場合の処理
     return '許可されていないファイル形式です。'

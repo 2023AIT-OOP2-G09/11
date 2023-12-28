@@ -70,8 +70,12 @@
     <nav>
         <ul class="clearfix">
             <span class="left-align">画像処理(アップロード)</span>
-            <li class="right-align"><a href="{{ url_for('index') }}">アップロード</a></li>
+            <li class="right-align"><a href="{{ url_for('canny') }}">輪郭</a></li>
+            <li class="right-align"><a href="{{ url_for('cascade') }}">キャスケード</a></li>
+            <li class="right-align"><a href="{{ url_for('mozaiku') }}">モザイク</a></li>
+            <li class="right-align"><a href="{{ url_for('gray') }}">グレースケール</a></li>
             <li class="right-align"><a href="{{ url_for('applist') }}">アップロードリスト</a></li>
+            <li class="right-align"><a href="{{ url_for('index') }}">アップロード</a></li>
         </ul>
     </nav>
     <h1>グレースケール</h1>

@@ -1,25 +1,7 @@
-import cv2
 import os
+import cv2
 
-def process_images(input_folder, output_folder):
-    # 出力フォルダが存在しない場合は作成
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-
-    # input_folder内のすべての画像ファイルに処理を適用
-    for filename in os.listdir(input_folder):
-        input_image_path = os.path.join(input_folder, filename)
-
-        # 画像処理の関数を呼び出し
-        detect_and_draw_faces(input_image_path, os.path.join(output_folder, filename))
-
-# アップロードされた画像の保存先ディレクトリ
-UPLOAD_FOLDER = 'uploads'
-
-# 処理済み画像の保存先ディレクトリ
-PROCESSED_FOLDER = 'cascade_image'
-
-def detect_and_draw_faces(input_image_path, output_path):
+def detect_and_draw_faces(input_image_path):
     # 画像を読み込む
     img = cv2.imread(input_image_path)
 
@@ -36,13 +18,15 @@ def detect_and_draw_faces(input_image_path, output_path):
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x+w, y+h), (0, 0, 255), 2)
 
-    # 結果を表示
-    #cv2.imshow('Detected Faces', img)
-    #cv2.waitKey(0)
+    # 保存先ディレクトリの作成
+    output_dir = 'cascade_image'
+    os.makedirs(output_dir, exist_ok=True)
+
+    # 名前をつけて保存
+    out_filename = os.path.basename(input_image_path)
+
+    # 出力ファイルパス
+    output_path = os.path.join(output_dir, out_filename)
 
     # 画像を保存
     cv2.imwrite(output_path, img)
-
-if __name__ == "__main__":
-    # アップロードされた画像の処理
-    process_images(UPLOAD_FOLDER, PROCESSED_FOLDER)

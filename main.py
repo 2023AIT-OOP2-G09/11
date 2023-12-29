@@ -1,13 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from pathlib import Path
 import os
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-from module.cannycontour import apply_canny_edge_detection
-from module.face_cascade import detect_and_draw_faces
-from module.grayscale import grayscale_and_threshold
-from module.mozaiku import apply_mosaic_to_faces
-import cv2
 
 app = Flask(__name__)
 
@@ -24,30 +17,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 # アップロードされたファイルが許可された拡張子かどうかを確認する関数
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# ファイルシステムの変更を監視し、変更があったら特定の処理を実行するハンドラ
-class MyHandler(FileSystemEventHandler):
-    def on_modified(self, event):
-        if event.is_directory:
-            # ディレクトリが変更された場合の処理
-            print(f'Directory modified: {event.src_path}')
-            
-            # 画像処理を実行
-            apply_canny_edge_detection(UPLOAD_FOLDER, self.canny_folder)
-            detect_and_draw_faces(UPLOAD_FOLDER, self.drawface_folder)
-            grayscale_and_threshold(UPLOAD_FOLDER, self.grayscale_folder)
-            apply_mosaic_to_faces(UPLOAD_FOLDER, self.mosaic_folder)
-
-            # Flaskアプリケーションの設定を更新
-            app.config['Canny_FOLDER'] = str(self.canny_folder)
-            app.config['drawface_FOLDER'] = str(self.drawface_folder)
-            app.config['grayscale_FOLDER'] = str(self.grayscale_folder)
-            app.config['mosaic_FOLDER'] = str(self.mosaic_folder)
-
-# Flaskアプリケーション外でObserverオブジェクトを生成
-event_handler = MyHandler()
-observer = Observer()
-observer.schedule(event_handler, path=path_to_watch, recursive=True)
 
 # ホームページ
 @app.route('/')
@@ -155,9 +124,4 @@ def canny_pic(filename):
 
 # Flaskアプリケーションの起動
 if __name__ == "__main__":
-    try:
-        app.run(debug=True, use_reloader=False)
-    except KeyboardInterrupt:
-        # Ctrl+Cが押されたらObserverを停止
-        observer.stop()
-    observer.join()
+    app.run(debug=True, use_reloader=False)

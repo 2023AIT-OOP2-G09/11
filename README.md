@@ -12,6 +12,14 @@
 |ディレクトリ監視から各画像処理呼び出しをするプログラム |後藤啓輔 |k22054 |
 
 ## システムの動作確認方法
+１.ターミナルを二つ別で開き、frask側のプログラムとファイル変更監視プログラムを起動する。
+<br>
+２.frask側で画像処理をかけたい画像にをアップロードする。
+<br>
+3.webサイト上で画像処理の種類別に閲覧することができ、処理後の画像がそれぞれのファイルに保存される
+<br>
+※同じ名前のファイルは受け付けていないので気をつけること
+
 
 ## 使用したライブラリのバージョン
 | ライブラリ     | バージョン      |
@@ -33,21 +41,29 @@
 <br>
   │  └grayscale.py
 <br>
-  │  └mozaiku_k22064.py
+  │  └mozaiku.py
 <br>
-  ├[output_image]（処理後の画像）
+  ├[canny_image]（処理後の画像）
 <br>
-  │  └canny.jpg
+  ├[cascade_image]（処理後の画像）
 <br>
-  │  └Detected_Faces.jpg（枠表示）
+  ├[grayscale_image]（処理後の画像）
 <br>
-  │  └grayscale.jpg（二値化）
+  ├[mozaiku_image]（処理後の画像）
 <br>
-  │  └mozaiku.jpg（モザイク）
-<br>
-  ├[templates]
+  ├[templates](webサイトのそれぞれのhtml)
 <br>
   │  └index.html
+<br>
+  │  └applist_form.html
+<br>
+  │  └canny_form.html
+<br>
+  │  └cascade.html
+<br>
+  │  └gratscale_form.html
+<br>
+  │  └mozaiku.html
 <br>
   ├[uploads]（アップロードした画像）
 <br>
@@ -55,4 +71,6 @@
 <br>
   │  └images01.jpg
 <br>
-  └main.py ⇠ プロジェクトのエントリポイント
+  └main.py (frask側のプログラム)
+<br>
+  └image_process.py (ファイル変更監視のプログラム)
